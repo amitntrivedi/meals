@@ -5,7 +5,7 @@ const CategoryMealsScreen =(props ) =>{
 
     return(
         <View style={styles.screen}>
-            <Text >Categories Screen</Text>
+            <Text >Category Meals Screen</Text>
         </View>
     ); 
 
