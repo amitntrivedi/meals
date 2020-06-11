@@ -4,14 +4,46 @@ import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen'; 
 import MealDetailScreen from '../screens/MealDetailScreen';
 import { exp } from 'react-native-reanimated';
+import Colors from '../constants/Colors';
+import {Platform} from 'react-native';
 
-const MealsNavigator =createStackNavigator ({
-    Categories: CategoriesScreen,
-  
-    Meals: CategoryMealsScreen,
-    Detail: MealDetailScreen,
-  
 
-}); 
+const MealsNavigator =createStackNavigator ( {
+    Categories:{
+        screen: CategoriesScreen,navigationOptions:{
+            
+        }
+    }  ,
+    CategoryMeals:{
+        screen: CategoryMealsScreen,navigationOptions:{
+           
+        }
+    }  ,
+    Detail:{
+        screen: MealDetailScreen,navigationOptions:{
+            
+        }
+    }  ,
+     
+     
+},{
+
+ 
+    defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: Colors.primaryColor
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      },
+
+    }
+       
+    
+ 
+ 
+); 
 
 export default  createAppContainer( MealsNavigator); 
