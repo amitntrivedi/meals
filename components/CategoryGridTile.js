@@ -1,19 +1,28 @@
 import React from 'react'; 
-import {Text,View, StyleSheet, Button,FlatList,TouchableOpacity, Platform} from 'react-native'; 
+import {Text,View, StyleSheet, Button,FlatList,TouchableOpacity, Platform, TouchableNativeFeedback} from 'react-native'; 
 
 import{ CATEGORIES} from '../data/dummy-data';
 import Colors from '../constants/Colors'; 
 
 
+
 const CategoryGridTile  =(props ) =>{
+    let TouchableCmp = TouchableOpacity; 
+
+    if (Platform.OS === 'android'  ){
+        TouchableCmp = TouchableNativeFeedback; 
+    }
+
 return (
-    <TouchableOpacity  style={styles.gridItem}
+    <View   style={styles.gridItem}>
+    <TouchableNativeFeedback   style={{flex:1}}
     onPress={props.onSelect} >
     <View style={ {...styles.container, ...{backgroundColor: props.color}}}>
         <Text style={styles.title } numberOfLines={2} >{ props.title}</Text>
         
     </View>
-    </TouchableOpacity>
+    </TouchableNativeFeedback>
+    </View>
     
     ); 
 } ;
@@ -25,6 +34,8 @@ const styles = StyleSheet.create({
         flex:1,
         margin:15,
         height:150,
+        borderRadius:10,
+        overflow:'hidden'
     },
     title :{
         fontFamily: 'open-sans-bold',
