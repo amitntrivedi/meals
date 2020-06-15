@@ -1,21 +1,40 @@
 import React from 'react'; 
-import {Text,View, StyleSheet, ImageBackground} from 'react-native'; 
+import {Text,View, StyleSheet, Image,ScrollView } from 'react-native'; 
 import {HeaderButtons, Item } from 'react-navigation-header-buttons'; 
 import {CATEGORIES, MEALS} from '../data/dummy-data'; 
 import Meal from '../models/meal';
 import CustomHeaderButton from '../components/HeaderButton'; 
+import DefaultText from '../components/DefaultText';
+
+
+const ListItem = props => {
+    return (
+      <View style={styles.listItem}>
+        <DefaultText>{props.children}</DefaultText>
+      </View>
+    );
+  };
 
 const MealDetailScreen =(props ) =>{
     const mealId =props.navigation.getParam('mealId');
     const selectedMeal = MEALS.find(meal => meal.id === mealId)
     return(
-        <View style={styles.screen}>
-            <Text >Meal Detail   {selectedMeal.id}</Text>
-            <Text >Title {selectedMeal.imageUrl.title}</Text>
-            <ImageBackground source={ {uri:selectedMeal.imageUrl}}  style={styles.bgImage}     >
-
-            </ImageBackground>
+        <ScrollView>
+        <Image source={{ uri: selectedMeal.imageUrl }} style={styles.image} />
+        <View style={styles.details}>
+          <DefaultText>{selectedMeal.duration}m</DefaultText>
+          <DefaultText>{selectedMeal.complexity.toUpperCase()}</DefaultText>
+          <DefaultText>{selectedMeal.affordability.toUpperCase()}</DefaultText>
         </View>
+        <Text style={styles.title}>Ingredients</Text>
+        {selectedMeal.ingredients.map(ingredient => (
+          <ListItem key={ingredient}>{ingredient}</ListItem>
+        ))}
+        <Text style={styles.title}>Steps</Text>
+        {selectedMeal.steps.map(step => (
+          <ListItem key={step}>{step}</ListItem>
+        ))}
+      </ScrollView>
     ); 
 
 } 
@@ -40,17 +59,26 @@ MealDetailScreen.navigationOptions = (navigationOptions) =>{
 }; 
 
 const styles = StyleSheet.create({
-    screen:{
-        flex:1,
-        alignItems:'center', 
-        justifyContent: 'center',
-    }, 
-    bgImage:{
-        width:'100%',
-        height:'100%',
-        justifyContent:'flex-end'
-    }
-
+  
+   
+ 
+    
+    details: {
+        flexDirection: 'row',
+        padding: 15,
+        justifyContent: 'space-around'
+      },
+      image: {
+        width: '100%',
+        height: 200
+      },
+      listItem: {
+        marginVertical: 10,
+        marginHorizontal: 20,
+        borderColor: '#ccc',
+        borderWidth: 0,
+        padding: 10
+      }
 
 });  
 
